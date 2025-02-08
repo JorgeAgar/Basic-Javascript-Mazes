@@ -1,11 +1,9 @@
-//var button = document.getElementById("button");
-
+const maze_width = 29;
+const maze_height = 29;
 var canvas = document.getElementById("lab_canvas");
-var continue_loop = true;
 
 //copied from https://github.com/professor-l/mazes
 function drawMaze(maze, canvasId) {
-    //console.log("drawing");
     var canvas = document.getElementById(canvasId);
     var ctx = canvas.getContext("2d");
     
@@ -27,12 +25,13 @@ function drawMaze(maze, canvasId) {
 }
 
 function backtracking(){
-    backtrackingMaze(29, 29);
+    backtrackingMaze(maze_width, maze_height);
 }
+
 /*
-    5   2   6
-    1   -   3
-    7   4   8
+       1  
+    0  -  2
+       3
 */
 function backtrackingMaze(width, height){
     //copied from https://github.com/professor-l/mazes
@@ -59,24 +58,17 @@ function backtrackingMaze(width, height){
     var pos_stack = [current_cell];
 
     Loop:
-    while(available_cells > 0 && continue_loop){
-        //console.log("");
+    while(available_cells > 0){
+
         maze[current_cell[0]][current_cell[1]] = 0;
-        //console.log("av cells " + available_cells);
-        //console.log(tried_directions);
+        
         if(tried_directions[0] == 1 && tried_directions[1] == 1 && tried_directions[2] == 1 && tried_directions[3] == 1){
             tried_directions = [0, 0, 0, 0];
-            //console.log(pos_stack.pop());
-            //current_cell = shufflePos(maze, pos_stack);
-            //pos_stack.pop();
             current_cell = pos_stack.pop();
-            //console.log("shuffled to: " + current_cell);
         }
 
-        var direction = Math.floor(Math.random() * 4);
         var possible = [0, 0, 0, 0];
-        //console.log(maze);
-        //console.log("current cell " + current_cell[0] + ", " + current_cell[1]);
+
         if(current_cell[0] > 2 && maze[current_cell[0]-2][current_cell[1]] == 1)
             possible[0] = 1;
         if(current_cell[1] > 2 && maze[current_cell[0]][current_cell[1]-2] == 1)
@@ -86,27 +78,20 @@ function backtrackingMaze(width, height){
         if(current_cell[1]+2 < height && maze[current_cell[0]][current_cell[1]+2] == 1)
             possible[3] = 1;
 
-        //console.log("posible " + possible);
-        //console.log(direction);
+        var direction = Math.floor(Math.random() * 4);
 
         switch(direction){
             case 0:
-                //console.log("cell: " + current_cell);
-                //console.log("possible " + possible[0]);
                 if(current_cell[0] <= 1 || possible[0] != 1){
                     tried_directions[0] = 1;
                     continue Loop;
                 }
                 tried_directions = [0, 0, 0, 0];
                 var print = current_cell.map((x) => x);
-                //console.log("previous pos: " + print);
                 pos_stack.push(print);
                 current_cell[0] -= 2;
                 maze[current_cell[0]][current_cell[1]] = 0;
                 maze[current_cell[0]+1][current_cell[1]] = 0;
-                //printMaze(maze);
-                //available_cells--;
-                //console.log("hello");
                 break;
             case 1:
                 if(current_cell[1] <= 1 || possible[1] != 1){
@@ -115,13 +100,10 @@ function backtrackingMaze(width, height){
                 }
                 tried_directions = [0, 0, 0, 0];
                 var print = current_cell.map((x) => x);
-                //console.log("previous pos: " + print);
                 pos_stack.push(print);
                 current_cell[1] -= 2;
                 maze[current_cell[0]][current_cell[1]] = 0;
                 maze[current_cell[0]][current_cell[1]+1] = 0;
-                //available_cells--;
-                //printMaze(maze);
                 break;
             case 2:
                 if(current_cell[0] >= width-1 || possible[2] != 1){
@@ -130,13 +112,10 @@ function backtrackingMaze(width, height){
                 }
                 tried_directions = [0, 0, 0, 0];
                 var print = current_cell.map((x) => x);
-                //console.log("previous pos: " + print);
                 pos_stack.push(print);
                 current_cell[0] += 2;
                 maze[current_cell[0]][current_cell[1]] = 0;
                 maze[current_cell[0]-1][current_cell[1]] = 0;
-                //available_cells--;
-                //printMaze(maze);
                 break;
             case 3:
                 if(current_cell[1] >= height-1 || possible[3] != 1){
@@ -145,26 +124,24 @@ function backtrackingMaze(width, height){
                 }
                 tried_directions = [0, 0, 0, 0];
                 var print = current_cell.map((x) => x);
-                //console.log("previous pos: " + print);
                 pos_stack.push(print);
                 current_cell[1] += 2;
                 maze[current_cell[0]][current_cell[1]] = 0;
                 maze[current_cell[0]][current_cell[1]-1] = 0;
-                //available_cells--;
-                //printMaze(maze);
                 break;
             default:
                 console.log("something happened");
                 break;
         }
         available_cells--;
-        //drawMaze(maze, "lab_canvas");
     }
     console.log("finish maze gen");
+    
+    //open start and finish
     maze[1][0] = 0;
     maze[maze.length-2][maze.length-1] = 0;
+
     drawMaze(maze, "lab_canvas");
-    //console.log(maze);
     //printMaze(maze);
 }
 
@@ -177,9 +154,7 @@ function printMaze(maze){
         var line = "";
         for(let j = 0; j < maze[0].length; j++){
             line += maze[j][i] + "   ";
-            //console.log(i + ", " + j);
         }
         console.log(line);
     }
-    //console.log(maze.length + "x" + maze[0].length);
 }
