@@ -17,7 +17,7 @@ function canvasKeyDown(event){
     if(key_solving_pos[1] > 1 && (event.code == "ArrowUp" || event.code == "KeyW") && maze[key_solving_pos[0]][key_solving_pos[1]-1] != 1){
         key_solving_pos[1]--;
     }
-    else if(key_solving_pos[1] < maze_height-2 && (event.code == "ArrowDown" || event.code == "KeyS") && maze[key_solving_pos[0]][key_solving_pos[1]+1] != 1){
+    else if((key_solving_pos[1] < maze_height-2 || (key_solving_pos[0] == maze_width-2 && key_solving_pos[1] == maze_height-2)) && (event.code == "ArrowDown" || event.code == "KeyS") && maze[key_solving_pos[0]][key_solving_pos[1]+1] != 1){
         key_solving_pos[1]++;
     }
     else if(key_solving_pos[0] > 1 && (event.code == "ArrowLeft" || event.code == "KeyA") && maze[key_solving_pos[0]-1][key_solving_pos[1]] != 1){
