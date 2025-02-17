@@ -9,13 +9,29 @@ const cell_height = Math.floor(canvas.height/maze_height);
 var maze = [];
 
 canvas.onclick = canvasClick;
-//canvas.onkeydown = canvasKeyDown;
+canvas.onkeydown = canvasKeyDown;
 
+var key_solving_pos = [1, 0];
 function canvasKeyDown(event){
-    console.log("keyddown");
+    console.log(key_solving_pos);
+    if(key_solving_pos[1] > 1 && (event.code == "ArrowUp" || event.code == "KeyW") && maze[key_solving_pos[0]][key_solving_pos[1]-1] != 1){
+        key_solving_pos[1]--;
+    }
+    else if(key_solving_pos[1] < maze_height-2 && (event.code == "ArrowDown" || event.code == "KeyS") && maze[key_solving_pos[0]][key_solving_pos[1]+1] != 1){
+        key_solving_pos[1]++;
+    }
+    else if(key_solving_pos[0] > 1 && (event.code == "ArrowLeft" || event.code == "KeyA") && maze[key_solving_pos[0]-1][key_solving_pos[1]] != 1){
+        key_solving_pos[0]--;
+    }
+    else if(key_solving_pos[0] < maze_width-2 && (event.code == "ArrowRight" || event.code == "KeyD") && maze[key_solving_pos[0]+1][key_solving_pos[1]] != 1){
+        key_solving_pos[0]++;
+    }
+    
+    userSolveCell(key_solving_pos[0], key_solving_pos[1]);
 }
 
 function canvasClick(event){
+    canvas.focus();
     var mazeX = Math.ceil(event.offsetX/cell_width)-1;
     var mazeY = Math.ceil(event.offsetY/cell_height)-1;
 
