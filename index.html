@@ -1,10 +1,20 @@
 <html>
-    <head title="laberintos"></head>
+    <head>
+        <title>Mazes</title>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+    </head>
     <body>
-        <div>
-            <button id="button" onclick="backtracking()">Generate maze</button>
-        </div>
-        <canvas width="725" height="725" id="lab_canvas"></canvas>
+        <article id="main_content">
+            <header id="main_header">
+                <h1>Javascript Mazes</h1>
+            </header>
+            <div id="canvas_div">
+                <canvas width="645" height="645" id="lab_canvas"></canvas>
+                <br>
+                <button id="generate_button" onclick="backtracking()">Generate maze</button>
+            </div>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus qui deserunt quos, eaque velit nemo! Aliquid molestiae dolor quos quibusdam! Ad qui tempore, esse odio cumque temporibus modi iusto voluptas?</p>
+        </article>
     </body>
     <script src="script.js"></script>
 </html>

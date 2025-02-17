@@ -1,0 +1,31 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#main_content, #canvas_div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#lab_canvas {
+    margin: 15px 0;
+}
+
+#generate_button {
+    color: white;
+    background-color: black;
+    font-weight: bold;
+    border: none;
+    padding: 10px;
+    font-size: medium;
+    cursor: pointer;
+}
+
+header>h1 {
+    font-size: 30px;
+}
