@@ -15,19 +15,23 @@ var key_solving_pos = [1, 0];
 function canvasKeyDown(event){
     console.log(key_solving_pos);
     if(key_solving_pos[1] > 1 && (event.code == "ArrowUp" || event.code == "KeyW") && maze[key_solving_pos[0]][key_solving_pos[1]-1] != 1){
-        key_solving_pos[1]--;
+        // key_solving_pos[1]--;
+        userSolveCell(key_solving_pos[0], key_solving_pos[1]-1);
     }
     else if((key_solving_pos[1] < maze_height-2 || (key_solving_pos[0] == maze_width-2 && key_solving_pos[1] == maze_height-2)) && (event.code == "ArrowDown" || event.code == "KeyS") && maze[key_solving_pos[0]][key_solving_pos[1]+1] != 1){
-        key_solving_pos[1]++;
+        // key_solving_pos[1]++;
+        userSolveCell(key_solving_pos[0], key_solving_pos[1]+1);
     }
     else if(key_solving_pos[0] > 1 && (event.code == "ArrowLeft" || event.code == "KeyA") && maze[key_solving_pos[0]-1][key_solving_pos[1]] != 1){
-        key_solving_pos[0]--;
+        // key_solving_pos[0]--;
+        userSolveCell(key_solving_pos[0]-1, key_solving_pos[1]);
     }
     else if(key_solving_pos[0] < maze_width-2 && (event.code == "ArrowRight" || event.code == "KeyD") && maze[key_solving_pos[0]+1][key_solving_pos[1]] != 1){
-        key_solving_pos[0]++;
+        // key_solving_pos[0]++;
+        userSolveCell(key_solving_pos[0]+1, key_solving_pos[1]);
     }
-    
-    userSolveCell(key_solving_pos[0], key_solving_pos[1]);
+
+    //userSolveCell(key_solving_pos[0], key_solving_pos[1]);
 }
 
 function canvasClick(event){
@@ -48,12 +52,18 @@ function userSolveCell(x, y){
     //console.log(x + "," + y); 
     if(maze[x][y] == 0 && (maze[x-1][y] == 2 || maze[x][y-1] == 2 || maze[x+1][y] == 2 || maze[x][y+1] == 2)){
         maze[x][y] = 2;
-        userSolveDraw(x, y, 1);
+        userSolveDraw(key_solving_pos[0], key_solving_pos[1], 1);
+        key_solving_pos[0] = x;
+        key_solving_pos[1] = y;
+        userSolveDraw(x, y, 3);
         return;
     }
     if(maze[x][y] == 2){
-        maze[x][y] = 0;
-        userSolveDraw(x, y, 2);
+        maze[key_solving_pos[0]][key_solving_pos[1]] = 0;
+        userSolveDraw(key_solving_pos[0], key_solving_pos[1], 2);
+        key_solving_pos[0] = x;
+        key_solving_pos[1] = y;
+        userSolveDraw(x, y, 3);
     }
 }
 
@@ -67,6 +77,10 @@ function userSolveDraw(mazeX, mazeY, action){
     } else if(action == 2){
         //console.log("action 2")
         ctx.fillStyle = "white";
+        ctx.fillRect(cell_width * mazeX, cell_height * mazeY,
+            cell_width, cell_height);
+    } else if(action == 3){
+        ctx.fillStyle = "#006000";
         ctx.fillRect(cell_width * mazeX, cell_height * mazeY,
             cell_width, cell_height);
     }
@@ -93,7 +107,7 @@ function drawMaze() {
 }
 
 function backtracking(){
-    backtrackingMaze(maze_width, maze_height);
+    generateMaze(maze_width, maze_height);
 }
 
 /*
@@ -101,7 +115,8 @@ function backtracking(){
     0  -  2
        3
 */
-function backtrackingMaze(width, height){
+function generateMaze(width, height){
+    key_solving_pos = [1, 0];
     maze = [];
     for (var i = 0; i < height; i++) {
         maze.push([]);
