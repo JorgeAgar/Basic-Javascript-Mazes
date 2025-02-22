@@ -1,19 +1,50 @@
 <html>
     <head>
-        <title>Mazes</title>
+        <title>A Page about mazes</title>
         <link rel="stylesheet" type="text/css" href="style.css"/>
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     </head>
     <body>
-        <article id="main_content">
+        <article class="main_content">
             <header id="main_header">
-                <h1>Javascript Mazes</h1>
+                <h1 class="main_title">Mazes</h1>
             </header>
-            <div id="canvas_div">
-                <canvas width="645" height="645" id="lab_canvas" tabindex="0"></canvas>
-                <br>
-                <button id="generate_button" onclick="backtracking()">Generate maze</button>
+            <div class="canvas_div">
+                <canvas width="625" height="625" id="lab_canvas" tabindex="0"></canvas>
+                <div class="button_div">
+                    <button class="tryAgainButton" onclick="tryAgain()" id="try_again_button">Try Again</button>
+                    <button class="button" id="generate_button" onclick="backtracking()">Generate maze</button>
+
+                    <!-- Cometario para diferencias -->
+                    <button id="nonActionBlank">try again</button>
+                </div>
+                <span id="win_text">Congratulations!</span>
             </div>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus qui deserunt quos, eaque velit nemo! Aliquid molestiae dolor quos quibusdam! Ad qui tempore, esse odio cumque temporibus modi iusto voluptas?</p>
+            <h1 class="article_subtitle">The Wonder of Mazes</h1>
+            <p class ="article_paragraph">Mazes have fascinated humanity for centuries, serving as both puzzles and metaphors 
+                for life’s complexities. From ancient labyrinths to modern video games, 
+                they challenge and inspire us.</p>
+            <h1 class="article_subtitle">A Brief History</h1>
+            <p class ="article_paragraph">Mazes date back to antiquity, with the most famous being 
+                the Labyrinth of Crete, built by Daedalus to imprison the Minotaur. In ancient Egypt, 
+                labyrinthine structures were carved into tombs to protect the deceased from grave 
+                robbers and symbolize the journey to the afterlife. The Romans incorporated maze 
+                designs into intricate mosaic floors, possibly used for religious or entertainment 
+                purposes. During the Renaissance, elaborate hedge mazes became popular in European 
+                gardens, offering amusement and intrigue to nobility. By the 18th and 19th centuries, 
+                hedge mazes were widely embraced as decorative and recreational features in parks and 
+                estates, laying the foundation for modern corn mazes and maze-based attractions.</p>
+            <h1 class="article_subtitle">Why Mazes Captivate Us</h1>
+            <p class ="article_paragraph">Mazes engage our problem-solving instincts and are used in psychological studies 
+                to understand learning and memory. They also symbolize life’s unpredictable paths, 
+                appearing in literature and film as metaphors for personal growth.</p>
+            <h1 class="article_subtitle">Modern Mazes</h1>
+            <p class ="article_paragraph">Today, mazes exist in video games, virtual reality, and AI navigation. They entertain, 
+                educate, and aid in technology, from robotic vacuums to rescue drones.</p>
+            <h1 class="article_subtitle">The Enduring Appeal</h1>
+            <p class ="article_paragraph">Mazes remind us that every problem has a solution—sometimes requiring patience and 
+                strategy. Whether real or metaphorical, navigating a maze is as rewarding as finding 
+                the way out.</p>
         </article>
     </body>
     <script src="script.js"></script>

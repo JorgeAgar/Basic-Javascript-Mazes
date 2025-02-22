@@ -4,9 +4,10 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
+    
 }
 
-#main_content, #canvas_div {
+.main_content, .canvas_div {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -24,8 +25,79 @@ body {
     padding: 10px;
     font-size: medium;
     cursor: pointer;
+    margin-bottom: 25px;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-family: 'Press Start 2P';
+
 }
 
-header>h1 {
-    font-size: 30px;
+.tryAgainButton{
+    color: black;
+    background-color: white;
+    font-weight: bold;
+    border-color: black;
+    border-style: solid;
+    border-radius: 5px;
+    border-width: 2px;
+    padding: 5px;
+    font-size: small;
+    font-family: 'Press Start 2P';
+    cursor: pointer;
+}
+
+.canvas_div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.button_div > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.button_div .button {
+    /* margin: 0 10px; Espacio entre los botones */
+}
+
+#win_text {
+    color: #C4A206;
+    font-weight: bold;
+    display: none;
+}
+
+.main_title{
+    font-family: 'Press Start 2P';
+    font-size: 3em;
+}
+.article_paragraph {
+    text-align: start;
+    margin-inline: 15%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: large;
+    font-family: "Lucida Sans";
+}
+
+.article_subtitle {
+    margin: 5px;
+    font-family: "Lucida Sans";
+}
+
+#nonActionBlank {
+    color: black;
+    background-color: white;
+    font-weight: bold;
+    border-color: black;
+    border-style: solid;
+    border-radius: 5px;
+    border-width: 2px;
+    padding: 5px;
+    font-size: small;
+    cursor: pointer;
+    font-family: 'Press Start 2P';
+    visibility: hidden;
+    pointer-events: none;
 }

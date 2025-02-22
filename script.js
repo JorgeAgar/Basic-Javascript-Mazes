@@ -1,19 +1,27 @@
 var canvas = document.getElementById("lab_canvas");
 var ctx = canvas.getContext("2d");
 
-const maze_width = 43;
-const maze_height = 43;
-const cell_width = Math.floor(canvas.width/maze_width);
-const cell_height = Math.floor(canvas.height/maze_height);
+var generate_button = document.getElementById("generate_button");
+var try_again_button = document.getElementById("try_again_button");
+var win_text = document.getElementById("win_text");
+
+var maze_width = 25;
+var maze_height = 25;
+var cell_width = Math.floor(canvas.width/maze_width);
+var cell_height = Math.floor(canvas.height/maze_height);
 
 var maze = [];
+
+var won = false;
+
+backtracking(); //generate a maze as soon as page is loaded
 
 canvas.onclick = canvasClick;
 canvas.onkeydown = canvasKeyDown;
 
 var key_solving_pos = [1, 0];
 function canvasKeyDown(event){
-    console.log(key_solving_pos);
+    //console.log(key_solving_pos);
     if(key_solving_pos[1] > 1 && (event.code == "ArrowUp" || event.code == "KeyW") && maze[key_solving_pos[0]][key_solving_pos[1]-1] != 1){
         // key_solving_pos[1]--;
         userSolveCell(key_solving_pos[0], key_solving_pos[1]-1);
@@ -35,6 +43,7 @@ function canvasKeyDown(event){
 }
 
 function canvasClick(event){
+    try_again_button.style.visibility = "visible";
     canvas.focus();
     var mazeX = Math.ceil(event.offsetX/cell_width)-1;
     var mazeY = Math.ceil(event.offsetY/cell_height)-1;
@@ -44,7 +53,7 @@ function canvasClick(event){
     ctx.fillStyle = "green";
     ctx.fillRect(cell_width, 0,
         cell_width, cell_height);
-
+    ctx.fillStyle = "black";
     userSolveCell(mazeX, mazeY);
 }
 
@@ -85,28 +94,68 @@ function userSolveDraw(mazeX, mazeY, action){
             cell_width, cell_height);
     }
     ctx.fillStyle = "black";
+
+    if(mazeX == maze_width-2 && mazeY == maze_height-1){
+        winTrigger();
+    }
+}
+
+function tryAgain(){
+    for(let i = 0; i < maze.length; i++){
+        for(let j = 0; j < maze[0].length; j++){
+            if(maze[i][j] == 2)
+                maze[i][j] = 0;
+        }
+    }
+    drawMaze();
+    resetWin();
+}
+
+function winTrigger(){
+    if(!won){ //this can be triggered multiple times on 1 maze
+        generate_button.style.backgroundColor = "#C4A206";
+        generate_button.textContent = "Next Level";
+        win_text.style.display = "block";
+    }
+
+    won = true;
+}
+
+function resetWin(){
+    try_again_button.style.visibility = "hidden";
+    won = false;
+    generate_button.style.backgroundColor = "black";
+    generate_button.textContent = "Generate maze"
+    win_text.style.display = "none";
+    key_solving_pos = [1, 0];
 }
 
 //modified from https://github.com/professor-l/mazes
 function drawMaze() {
-    var rectWidth = Math.floor(canvas.width / maze[0].length);
-    var rectHeight = Math.floor(canvas.height / maze.length);
-    
-    for (var i = 0; i < maze.length; i++) {
-        for (var j = 0; j < maze[i].length; j++) {
+    //var rectWidth = Math.floor(canvas.width / maze[0].length);
+    //var rectHeight = Math.floor(canvas.height / maze.length);
+    ctx.fillStyle = "black";
+    for (var i = 0; i < maze_width; i++) {
+        for (var j = 0; j < maze_height; j++) {
             if (maze[i][j]) {
-                ctx.fillRect(rectWidth * i, rectHeight * j,
-                             rectWidth, rectHeight);
+                ctx.fillRect(cell_width * i, cell_height * j,
+                             cell_width, cell_height);
             }
             else {
-                ctx.clearRect(rectWidth * i, rectHeight * j,
-                              rectWidth, rectHeight);
+                ctx.clearRect(cell_width * i, cell_height * j,
+                              cell_width, cell_height);
             }
         }
     }
 }
 
 function backtracking(){
+    if(won){
+        maze_width += 4;
+        maze_height += 4;
+        cell_width = Math.floor(canvas.width/maze_width);
+        cell_height = Math.floor(canvas.height/maze_height);
+    }
     generateMaze(maze_width, maze_height);
 }
 
@@ -116,7 +165,10 @@ function backtracking(){
        3
 */
 function generateMaze(width, height){
-    key_solving_pos = [1, 0];
+    canvas.width = cell_width * maze_width;
+    canvas.height = cell_height * maze_height;
+    resetWin();
+
     maze = [];
     for (var i = 0; i < height; i++) {
         maze.push([]);
